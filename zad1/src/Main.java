@@ -1,13 +1,11 @@
-import javafx.scene.Scene;
-
 import java.io.*;
-import java.util.Map;
-import java.util.Scanner;
+
 
 public class Main {
     String tekst= "";
     String wynik="";
     Integer liczba=4;
+
 
 public void met1 (){
     wynik="";
@@ -42,6 +40,7 @@ public void siorbPlik(File f){
     }
 }
 
+
     public static void main(String[] args) {
         Main main = new Main();
         /*Scanner nazwa = new Scanner(System.in);
@@ -54,5 +53,6 @@ public void siorbPlik(File f){
         main.siorbPlik(new File("./zad1/src/kektest3.txt"));
         main.siorbPlik(new File("./zad1/src/kektest4.txt"));
         main.siorbPlik(new File("./zad1/src/kektest5.txt"));
+
     }
 }
