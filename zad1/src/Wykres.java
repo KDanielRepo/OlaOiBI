@@ -22,6 +22,7 @@ public class Wykres extends Application {
     String tekst= "";
     String wynik="";
     Integer liczba=4;
+    List<String> szyfry;
 
     public void met1 (){
         wynik="";
@@ -35,23 +36,29 @@ public class Wykres extends Application {
             wynik += tak ;
         }
     }
-    public void siorbPlik(File f){
+    public void siorbPlik(){
         try {
-            FileReader fileReader = new FileReader(f);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            tekst=bufferedReader.readLine();
-            bufferedReader.close();
-            met1();
-            System.out.println(wynik);
-            File file = new File("./zad1/src/kek");
-            FileWriter fileWriter = new FileWriter(file,true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(wynik);
-            bufferedWriter.newLine();
-            bufferedWriter.close();
-            getWykres(tekst,wynik);
-            if (!file.exists())
-                file.createNewFile();
+            List<String> wyniki = new ArrayList<>();
+            szyfry = new ArrayList<>();
+            for (int i = 1; i < 6; i++) {
+                FileReader fileReader = new FileReader(new File("./zad1/src/kektest"+i+".txt"));
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                tekst=bufferedReader.readLine();
+                bufferedReader.close();
+                met1();
+                System.out.println(wynik);
+                File file = new File("./zad1/src/kek");
+                FileWriter fileWriter = new FileWriter(file,true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(wynik);
+                bufferedWriter.newLine();
+                bufferedWriter.close();
+                wyniki.add(tekst);
+                szyfry.add(wynik);
+                if (!file.exists())
+                    file.createNewFile();
+            }
+            getWykres(wyniki,wynik);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -63,7 +70,7 @@ public class Wykres extends Application {
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         primaryStage.show();
-        siorbPlik(new File("./zad1/src/kektest1.txt"));
+        siorbPlik();
         //siorbPlik(new File("./zad1/src/kektest2.txt"));
         //siorbPlik(new File("./zad1/src/kektest3.txt"));
         //siorbPlik(new File("./zad1/src/kektest4.txt"));
@@ -97,7 +104,7 @@ public class Wykres extends Application {
         litery.add("y");
         litery.add("z");
     }
-    public void getWykres(String wiadomosc,String szyfr){
+    public void getWykres(List<String> wiadomosc,String szyfr){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis2 = new CategoryAxis();
@@ -110,10 +117,12 @@ public class Wykres extends Application {
         setLitery(litery);
         for (int i = 0; i < litery.size(); i++) {
             int iloscc = 0;
-            for (int j = 0; j < wiadomosc.length(); j++) {
-                String test = wiadomosc.substring(j, j + 1);
-                if (litery.get(i).equals(test)) {
-                    iloscc++;
+            for(String st : wiadomosc){
+                for (int j = 0; j < st.length(); j++) {
+                    String test = st.substring(j, j + 1);
+                    if (litery.get(i).equals(test)) {
+                        iloscc++;
+                    }
                 }
             }
             ilosc.add(iloscc);
@@ -148,10 +157,12 @@ public class Wykres extends Application {
 
         for (int i = 0; i < litery2.size(); i++) {
             int iloscc = 0;
-            for (int j = 0; j < szyfr.length(); j++) {
-                String testt = szyfr.substring(j, j + 1);
-                if (litery2.get(i).equals(testt)) {
-                    iloscc++;
+            for(String st : szyfry){
+                for (int j = 0; j < st.length(); j++) {
+                    String testt = st.substring(j, j + 1);
+                    if (litery2.get(i).equals(testt)) {
+                        iloscc++;
+                    }
                 }
             }
             ilosc2.add(iloscc);
